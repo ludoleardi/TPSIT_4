@@ -8,11 +8,11 @@
 typedef struct
 {
     int rank;
-    char name[SIZE];
-    char platform[SIZE];
+    char* name;
+    char* platform;
     int year;
-    char genre[SIZE];
-    char publisher[SIZE];
+    char* genre;
+    char* publisher;
     float naSales;
     float euSales;
     float jpSales;
@@ -44,11 +44,11 @@ int main()
     {
         fgets(riga, SIZE, fp);
         data[cont].rank = atoi(strtok(riga, ","));
-        strcpy(data[cont].name, strtok(NULL, ","));
-        strcpy(data[cont].platform, strtok(NULL, ","));
+        data[cont].name = strtok(NULL, ",");
+        data[cont].platform = strtok(NULL, ",");
         data[cont].year = atoi(strtok(NULL, ","));
-        strcpy(data[cont].genre, strtok(NULL, ","));
-        strcpy(data[cont].publisher, strtok(NULL, ","));
+        data[cont].genre = strtok(NULL, ",");
+        data[cont].publisher = strtok(NULL, ",");
         data[cont].naSales = atof(strtok(NULL, ","));
         data[cont].euSales = atof(strtok(NULL, ","));
         data[cont].jpSales = atof(strtok(NULL, ","));
