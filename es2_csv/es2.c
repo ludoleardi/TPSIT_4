@@ -24,7 +24,7 @@ int main()
 {
     char riga[SIZE];
     Row data[LENGHT];
-    Row* c = &data[0];
+    Row* c = data;
 
     FILE *fp;
     fp = fopen("vgsales.csv", "r");
