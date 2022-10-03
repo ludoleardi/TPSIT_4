@@ -24,7 +24,7 @@ int main()
 {
     char riga[SIZE];
     Row data[LENGHT];
-    int* c = &data[0];
+    Row* c = &data[0];
 
     FILE *fp;
     fp = fopen("vgsales.csv", "r");
@@ -54,7 +54,7 @@ int main()
         (*c).jpSales = atof(strtok(NULL, ","));
         (*c).otherSales = atof(strtok(NULL, ","));
         (*c).globalSales = atof(strtok(NULL, ","));
-        printf("%d, %s, %s, %d, %s, %s, %f, %f, %f, %f, %f\n", c.rank, c.name, c.platform, c.year, c.genre, c.publisher, c.naSales, c.euSales, c.jpSales, c.otherSales, c.globalSales);
+        printf("%d, %s, %s, %d, %s, %s, %f, %f, %f, %f, %f\n", (*c).rank, (*c).name, (*c).platform, (*c).year, (*c).genre, (*c).publisher, (*c).naSales, (*c).euSales, (*c).jpSales, (*c).otherSales, (*c).globalSales);
         c++;
     }
 
