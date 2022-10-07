@@ -3,7 +3,7 @@
 #include <string.h>
 
 #define SIZE 1024
-#define LENGHT 100
+#define LENGHT 16600
 
 typedef struct
 {
@@ -43,18 +43,18 @@ int main()
     while(!feof(fp))
     {
         fgets(riga, SIZE, fp);
-        (*c).rank = atoi(strtok(riga, ","));
-        (*c).name = strtok(NULL, ",");
-        (*c).platform = strtok(NULL, ",");
-        (*c).year = atoi(strtok(NULL, ","));
-        (*c).genre = strtok(NULL, ",");
-        (*c).publisher = strtok(NULL, ",");
-        (*c).naSales = atof(strtok(NULL, ","));
-        (*c).euSales = atof(strtok(NULL, ","));
-        (*c).jpSales = atof(strtok(NULL, ","));
-        (*c).otherSales = atof(strtok(NULL, ","));
-        (*c).globalSales = atof(strtok(NULL, ","));
-        printf("%d, %s, %s, %d, %s, %s, %f, %f, %f, %f, %f\n", (*c).rank, (*c).name, (*c).platform, (*c).year, (*c).genre, (*c).publisher, (*c).naSales, (*c).euSales, (*c).jpSales, (*c).otherSales, (*c).globalSales);
+        c->rank = atoi(strtok(riga, ","));
+        c->name = strtok(NULL, ",");
+        c->platform = strtok(NULL, ",");
+        c->year = atoi(strtok(NULL, ","));
+        c->genre = strtok(NULL, ",");
+        c->publisher = strtok(NULL, ",");
+        c->naSales = atof(strtok(NULL, ","));
+        c->euSales = atof(strtok(NULL, ","));
+        c->jpSales = atof(strtok(NULL, ","));
+        c->otherSales = atof(strtok(NULL, ","));
+        c->globalSales = atof(strtok(NULL, ","));
+        printf("%d, %s, %s, %d, %s, %s, %f, %f, %f, %f, %f\n", c->rank, c->name, c->platform, c->year, c->genre, c->publisher, c->naSales, c->euSales, c->jpSales, c->otherSales, c->globalSales);
         c++;
     }
 
