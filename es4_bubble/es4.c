@@ -9,7 +9,7 @@ int main()
 
     for(int i = 0; i < 9; i++)
     {
-        for(int k = 0; k < 9 - i; k++)
+        for(p = v; p < v + 8; p++)
         {
             if(*p > *(p + 1))
             {
@@ -19,7 +19,6 @@ int main()
             }
             p = p + 1;
         }
-        p = v;
     }
     printf("Ordinamento: ");
 
