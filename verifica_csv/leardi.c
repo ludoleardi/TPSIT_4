@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #define SIZE 1024
 #define PATH "4AROB_GITA.csv"
@@ -80,9 +81,9 @@ void verificaPagamento(char *cognome)
     printf("\nCerco studente... \n");
     while (fgets(riga, SIZE, fp)) // scorro il file
     {
-        strtmp = strdup(strtok(riga, ";"));        // salvo la prima colonna del csv in una variabile temporanea
-        strtmp = strdup(strtok(NULL, ";"));        // salvo il cognome dello studente attuale
-        if (strcmp(strtmp, cognome) == 0) // verifico se il cognome presente nella riga del file corrisponde a quello cercato
+        strtmp = strdup(strtok(riga, ";")); // salvo la prima colonna del csv in una variabile temporanea
+        strtmp = strdup(strtok(NULL, ";")); // salvo il cognome dello studente attuale
+        if (strcmp(strtmp, cognome) == 0)   // verifico se il cognome presente nella riga del file corrisponde a quello cercato
         {
             cercato.cognome = strtmp;
             cercato.cifra = cercato.cifra + atoi(strtok(NULL, ";"));
@@ -92,41 +93,82 @@ void verificaPagamento(char *cognome)
     printf("%s: %d\n", cercato.cognome, cercato.cifra);
 }
 
-/*
+// salvo i dati in una tabella, una riga per studente
 void report(Studente *pagamenti, int len)
 {
-    Studente* pos = pagamenti; //salvo la posizione iniziale del puntatore
+    Studente *pos;   // salvo la posizione iniziale del puntatore
+    Studente *salva = pagamenti; // prima cella libera della tabella
 
     FILE *fp;
     fp = fopen(PATH, "r");
-    int n = 0;
     char riga[SIZE];
     char *strtmp;
-    while(fgets(riga, SIZE, fp))
+    bool salvato;
+    int n = 0;
+    while (fgets(riga, SIZE, fp))
     {
-        strtmp = strdup(strtok(riga, ";")); //salvo la data in una variabile temporanea
-        strtmp = strdup(strtok(NULL, ";")); //salvo il cognome nella variabile temporanea per verificare se esiste già
-        for(int i = 0; i < len; i++)
+        printf("Riga %d\n", n);
+        strtmp = strdup(strtok(riga, ";")); // salvo la data in una variabile temporanea
+        strtmp = strdup(strtok(NULL, ";")); // salvo il cognome nella variabile temporanea per verificare se esiste già
+        salvato = false;
+        pos = pagamenti;
+        while (salvato == false && pos < pagamenti + ((n) * sizeof(Studente)))
         {
-            if(strcmp(strtmp, ))
+            printf("%s - %s\n", strtmp, pos->cognome);
+            if (salva != pagamenti && strcmp(strtmp, pos->cognome) == 0)
+            {
+                printf("Caso 1\n");
+                pagamenti->cifra = pagamenti->cifra + atoi(strtok(NULL, ";"));
+                salvato = true;
+                n++;
+            }
+            printf("Fine if\n");
+            pos++;
+        }
+        if (salvato == false)
+        {
+            salva->cognome = strtmp;
+            salva->cifra = atoi(strtok(NULL, ";"));
+            printf("Caso 2: %s\n",salva->cognome);
+            salva++;
+            n++;
         }
     }
-
-    pagamenti = pos; //resetto il puntatore
 }
-*/
+
+// stampo la tabella
+void stampaReport(Studente *persona, int len)
+{
+    Studente *pos;
+
+    for (pos = persona; pos < persona + (len * sizeof(Studente)); pos++)
+    {
+        if (pos->cifra == 100)
+        {
+            printf("%s: %d\n", pos->cognome, pos->cifra);
+        }
+        else
+        {
+            printf("%s: %d ---- DA CONTROLLARE\n", pos->cognome, pos->cifra);
+        }
+    }
+}
 
 int main()
 {
     int len = lunghezza();
-    Studente* pagamenti = (Studente*) malloc(len * sizeof(Studente)); //alloco lo spazio in memoria per la tabella
 
     if (len != 0)
     {
+        Studente *pagamenti = (Studente *)malloc(len * sizeof(Studente)); // alloco lo spazio in memoria per la tabella
         // printf("%d", len);
         calcolaTot(len);
         verificaPagamento("Leardi");
-        //report(pagamenti, len);
+        printf("Elaboro report...\n");
+        report(pagamenti, len);
+        printf("Stampo report...\n");
+        stampaReport(pagamenti, len);
+        free(pagamenti);
     }
     else
     {
